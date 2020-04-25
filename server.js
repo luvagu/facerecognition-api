@@ -27,8 +27,12 @@ app.use(cors());
 
 // root
 app.get('/', (req, res) => { res.status(200).json({ 
-    "message": "Welcome to Node.js & Express Server by LuVaGu",
-    "purpose": "Server and Database for my Face Recognition React App"
+    "hello": "Welcome to Node.js & Express Server by LuVaGu",
+    "purpose": "Server and Database for my Face Recognition React App",
+    "appUrl": "https://luiavag.github.io/facerecognition/",
+    "serverPort": `Server is running on ${port}`,
+    "serverMessage": "Now accepting requests"
+    
 }) });
 
 // /signin
