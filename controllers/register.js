@@ -38,21 +38,8 @@ const handleResgister = (db, bcryptjs) => (req, res) => {
             .catch(() => res.status(400).json('Unable to register.'));
         //.catch((err) => res.status(400).json(err)) // it returns info about our db;
     }); // Async bcryptjs method hash - library replacement for bcrypt-nodejs
-
-    // db('login').insert({
-    //     name: name,
-    //     email: email
-    // });
-    // database.users.push(
-    //     {
-    //         id: '125',
-    //         name: name,
-    //         email: email,
-    //         //password: password,
-    //         entries: 0,
-    //         joined: new Date()
-    //     }
-    // );
 };
 
-export default handleResgister;
+module.exports = {
+    handleResgister: handleResgister
+}

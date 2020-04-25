@@ -17,20 +17,13 @@ const handleSignin = (db, bcryptjs) => (req, res) => {
                         //console.log(user[0]);
                         res.json(user[0]);
                     })
-                //.catch(() => res.status(400).json('Wrong credentials!'))
             } else {
                 res.status(400).json('Wrong credentials!')
             }
         })
         .catch(() => res.status(400).json('Unable to fetch user.'));
-    // // res.json('POST OK! - signin working');
-    // if (email === database.users[0].email &&
-    //     password === database.users[0].password) {
-    //     //res.json('success');
-    //     res.json(database.users[0]);
-    // } else {
-    //     res.status(400).json('error logging in.');
-    // }
 }
 
-export default handleSignin;
+module.exports = {
+    handleSignin: handleSignin
+}
