@@ -30,8 +30,8 @@ app.get('/', (req, res) => { res.status(200).json({
     "hello": "Welcome to Node.js & Express Server by LuVaGu",
     "purpose": "Server and Database for my Face Recognition React App",
     "appUrl": "https://luiavag.github.io/facerecognition/",
-    "serverPort": `Server is running on ${port}`,
-    "serverMessage": "Now accepting requests"
+    "serverPort": `Server is running on port ${port}`,
+    "serverMessage": "Now accepting requests..."
     
 }) });
 
