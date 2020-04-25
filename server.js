@@ -26,7 +26,7 @@ const db = knex({
 // });
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3000;
 
 // express middleware
 // app.use((req, res, next) => {
