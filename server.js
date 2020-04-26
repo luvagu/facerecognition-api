@@ -13,17 +13,12 @@ const db = knex({
     version: '12.2',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: false,
+        ssl: true,
         // host: '127.0.0.1',
         // user: 'luiavag',
         // password: 'luis1709',
         // database: 'facedetector'
     }
-});
-
-// Test DB connection
-db.select('*').from('users').then(data => {
-    console.log(data);
 });
 
 const app = express();
