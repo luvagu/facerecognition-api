@@ -13,12 +13,17 @@ const db = knex({
     version: '12.2',
     connection: {
         connectionString: process.env.DATABASE_URL,
-        ssl: true,
+        ssl: false,
         // host: '127.0.0.1',
         // user: 'luiavag',
         // password: 'luis1709',
         // database: 'facedetector'
     }
+});
+
+// Test DB connection
+db.select('*').from('users').then(data => {
+    console.log(data);
 });
 
 const app = express();
@@ -28,14 +33,15 @@ app.use(express.json());
 app.use(cors());
 
 // root
-app.get('/', (req, res) => { res.status(200).json({ 
-    "hello": "Welcome to Node.js & Express Server by LuVaGu",
-    "purpose": "Server and Database for my Face Recognition React App",
-    "appUrl": "https://luiavag.github.io/facerecognition/",
-    "serverPort": `Server is running on port ${port}`,
-    "serverMessage": "Now accepting requests..."
-    
-}) });
+app.get('/', (req, res) => {
+    res.status(200).json({
+        "hello": "Welcome to Node.js & Express Server by LuVaGu",
+        "purpose": "Server and Database for my Face Recognition React App",
+        "appUrl": "https://luiavag.github.io/facerecognition/",
+        "serverPort": `Server is running on port ${port}`,
+        "serverMessage": "Now accepting requests..."
+    })
+});
 
 // /signin
 app.post('/signin', signin.handleSignin(db, bcryptjs));
