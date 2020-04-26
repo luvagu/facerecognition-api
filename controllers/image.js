@@ -6,13 +6,9 @@ const app = new Clarifai.App({
 });
 
 const handleApiCall = () => (req, res) => {
-    if (req.body.input.length > 20) {
-        app.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
-            .then(data => res.json(data))
-            .catch(() => res.status(400).json('Unable to work with API.'));
-    } else {
-        res.status(400).json('Invalid image url. Unable to work with API.');
-    }
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
+        .then(data => res.json(data))
+        .catch(() => res.status(400).json('Unable to work with API.'));
 }
 
 const handleImage = (db) => (req, res) => {
