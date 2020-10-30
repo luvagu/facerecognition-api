@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -L server.js"
+    "dockerstart": "nodemon -L server.js",
+    "start": "node server.js"
   },
   "author": "LuVaGu",
   "license": "ISC",
