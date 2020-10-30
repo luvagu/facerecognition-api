@@ -2,49 +2,33 @@ const express = require('express');
 const bcryptjs = require('bcryptjs');
 const cors = require('cors');
 const knex = require('knex');
-const morgan = require('morgan');
 
 const register = require('./controllers/register');
 const signin = require('./controllers/signin');
 const profile = require('./controllers/profile');
 const image = require('./controllers/image');
-const auth = require('./controllers/auth');
 
 // heruko fix for ssl error on free account
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; // comment on testing: HEROKU SETTINGS
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
 
 const db = knex({
     client: 'pg',
     version: '12.2',
     connection: {
-        connectionString: process.env.DATABASE_URL, // comment on testing: HEROKU SETTINGS
-        ssl: true, // comment on testing: HEROKU SETTINGS
-    //     host: process.env.POSTGRES_HOST, // comment on production '127.0.0.1'
-    //     user: process.env.POSTGRES_USER, // comment on production 'luiavag'
-    //     password: process.env.POSTGRES_PASSWORD, // comment on production 'luis1709'
-    //     database: process.env.POSTGRES_DB // comment on production 'facedetector'
+        connectionString: process.env.DATABASE_URL,
+        ssl: true,
+        // host: '127.0.0.1',
+        // user: 'luiavag',
+        // password: 'luis1709',
+        // database: 'facedetector'
     }
-    // connection: process.env.POSTGRES_URI // comment on production: DOCKER SETTINGS
 });
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// IP/Site whitelist implementation
-// const whitelist = ['http://localhost:3001'];
-// const corsOptions = {
-// 	origin: function (origin, callback) {
-// 		if (whitelist.indexOf(origin) !== -1) {
-// 			callback(null, true);
-// 		} else {
-// 			callback(new Error('Not allowed by CORS'));
-// 		}
-// 	},
-// };
-
-app.use(morgan('combined'));
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 // root
 app.get('/', (req, res) => {
@@ -58,20 +42,19 @@ app.get('/', (req, res) => {
 });
 
 // /signin
-app.post('/signin', signin.signinAuth(db, bcryptjs));
+app.post('/signin', signin.handleSignin(db, bcryptjs));
 
 // /register
 app.post('/register', register.handleResgister(db, bcryptjs));
 
 // /profile
-app.get('/profile/:id', auth.requireAuth(), profile.handleProfileGet(db));
-app.post('/profile/:id', auth.requireAuth(), profile.handleProfileUpdate(db));
+app.get('/profile/:id', profile.handleProfile(db));
 
 // /image
-app.put('/image', auth.requireAuth(), image.handleImage(db));
+app.put('/image', image.handleImage(db));
 
 // Clarifai /imageurl
-app.post('/imageurl', auth.requireAuth(), image.handleApiCall());
+app.post('/imageurl', image.handleApiCall());
 
 // server port
 app.listen(port, () => {
